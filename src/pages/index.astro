@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getJournalData } from '../data.js';
+const data = getJournalData();
+const articles = (data.articles || []).slice(0, 6);
+const infoPageOrder = ['aim-and-scope','publication-fees','editorial-board','statistics','publication-ethics','writing-rules','indexing','publication-process','open-access-policy','reviewer-guidelines','editorial-policies','editor-guidelines','editorial-office','archive'];
+const pageOrder = Object.fromEntries(infoPageOrder.map((slug, index) => [slug, index]));
+const pages = (data.pages || []).sort((a, b) => (pageOrder[a.slug] ?? 999) - (pageOrder[b.slug] ?? 999));
+const infoPages = [{title:'About',url:'https://dergipark.org.tr/en/pub/journalata/about-journal'}, ...pages];
+const updated = data.updatedAt ? new Date(data.updatedAt).toLocaleString('en-GB') : 'Not yet updated';
+const announcements = (data.announcements || []).slice(0, 3);const announcementHome = 'https://dergipark.org.tr/en/journalata/announcements/2772';
+const announcementFallback = 'From 2027, the journal will publish exclusively in English. The announcement outlines this language change and updates for manuscript submissions.';
+---
+<BaseLayout title="Home" description="Journal of Academic Tourism Analysis — international, double-blind peer-reviewed and Diamond Open Access" lang="en">
+<section class="hero"><div class="wrap hero-layout"><div class="hero-content">
+  <div class="hero-tags" aria-label="Journal characteristics"><span>Diamond Open Access</span><span>International</span><span>Double-blind peer review</span></div>
+  <h1>Journal of Academic Tourism Analysis</h1><div class="hero-translation">Akademik Turizm Analizi Dergisi</div>
+  <p>Advancing tourism research that reshapes how destinations are understood, managed and experienced.</p>
+  <div class="hero-actions"><a class="button" href="https://dergipark.org.tr/en/journal/4326/submission/step/manuscript/new">Submit a Manuscript ↗</a><a class="button button-secondary" href="https://dergipark.org.tr/en/journal/4326/reviewer-request/send">Become a Reviewer ↗</a><button class="button button-secondary share-button" type="button" data-share-page data-copy-message="Link copied." data-copy-error="Sharing is not available right now.">Share this page</button><span class="share-status" data-share-status aria-live="polite"></span></div>
+</div><figure class="hero-cover"><img src="/journal-cover.jpg" alt="Journal of Academic Tourism Analysis journal cover" loading="eager" fetchpriority="high" /></figure></div></section>
+<script>
+  const shareButton = document.querySelector("[data-share-page]");
+  const shareStatus = document.querySelector("[data-share-status]");
+  shareButton?.addEventListener("click", async () => {
+    const shareData = { title: document.title, text: document.querySelector('meta[name="description"]')?.content || document.title, url: location.href };
+    if (navigator.share) {
+      try { await navigator.share(shareData); return; }
+      catch (error) { if (error?.name === "AbortError") return; }
+    }
+    try { await navigator.clipboard.writeText(location.href); shareStatus.textContent = shareButton.dataset.copyMessage; }
+    catch { shareStatus.textContent = shareButton.dataset.copyError; }
+  });
+</script>
+<div class="wrap meta-strip"><div class="meta"><b>2020</b><span>Founded</span></div><div class="meta"><b>2024</b><span>Journal renamed</span></div><div class="meta"><b>3023-8986</b><span>e-ISSN</span></div><div class="meta"><b>Continuous publication</b><span>Publication frequency</span></div><div class="meta"><b>No APC</b><span>No author publication fee</span></div><div class="meta publisher-meta"><b><a href="https://dergipark.org.tr/tr/pub/publisher/2051" target="_blank" rel="noreferrer">Bayram KANCA ↗</a></b><span>Publisher</span></div></div>
+<section class="metrics-section"><div class="wrap"><div class="metrics-heading">DergiPark publication timeline statistics</div><div class="metrics-grid"><div><b>7 days</b><span>Initial screening</span></div><div><b>68 days</b><span>To final decision</span></div><div><b>26 days</b><span>To publication</span></div></div></div></section>
+<section class="section about-section" id="about"><div class="wrap two-col"><div class="panel about-panel"><div class="eyebrow">About the journal</div><h2>Research focus</h2><p>The Journal of Academic Tourism Analysis (Journal ATA) is an international, double-blind peer-reviewed academic platform dedicated to publishing original, rigorous, and impactful research grounded in theoretical foundations across tourism and related disciplines. Moving beyond mere description, the journal encourages studies that develop new theoretical perspectives, critically evaluate existing frameworks, and offer evidence-based insights for both academic literature and industry practices.</p><p>Journal ATA welcomes interdisciplinary contributions across a broad spectrum of fields, including tourism and hospitality management, gastronomy and culinary studies, recreation and leisure studies, sustainable and smart tourism, destination management, tourism economics, sociology, and policy. Committed to research integrity and editorial transparency, the journal builds upon its foundational years—formerly known as the Journal of Eurasian Tourism Research—and continues its internationalization vision.</p><p>Operating under a Diamond Open Access model with zero fees for authors or readers, Journal ATA adopted a Continuous Publication model. This approach ensures that accepted articles are published immediately upon the completion of their editorial and production workflows without waiting for a scheduled issue. Journal ATA provides a robust, transparent, and seamless global platform for researchers, educators, and policymakers worldwide.</p></div><div class="panel information-panel"><div class="eyebrow">Journal Information</div><div class="quicklinks">{infoPages.map(p=><a href={p.url || p.sourceUrl}>{p.title}</a>)}</div></div></div></section>
+<section class="section announcement-section" id="announcements"><div class="wrap"><div class="section-head"><h2>Announcements</h2><a class="button" href={announcementHome} target="_blank" rel="noreferrer">View on DergiPark ↗</a></div>{announcements.length ? <div class="announcements-list">{announcements.map(item=><a class="announcement-item" href={announcementHome} target="_blank" rel="noreferrer"><div><h3>{item.title}</h3><p>{(item.description || announcementFallback).slice(0,240)}{(item.description || announcementFallback).length>240?'…':''}</p></div>{item.date && <time>{item.date}</time>}</a>)}</div> : <div class="announcements-list"><a class="announcement-item" href={announcementHome} target="_blank" rel="noreferrer"><div><h3>Journal ATA 2027 Language Policy Update and Manuscript Submissions</h3><p>{announcementFallback}</p></div><time>9 November 2026</time></a></div>}</div></section>
+<section class="section latest-section" id="latest"><div class="wrap"><div class="section-head"><h2>Latest Articles</h2><a class="button" href="/page/archive">View Archive ↗</a></div>
+{articles.length ? <div class="grid">{articles.map(a=><article class="article"><span class="tag">Research article</span><h3>{a.title || a.titleTr || 'Untitled article'}</h3><p>{(a.abstract || 'English abstract not available.').slice(0,210)}{(a.abstract || '').length>210?'…':''}</p><div class="byline">{a.authors || 'Author information'}{a.date ? ' · ' + a.date : ''}</div><a class="read" href={a.url || 'https://dergipark.org.tr/en/pub/journalata'} target="_blank" rel="noreferrer">Read article at DergiPark ↗</a></article>)}</div> : <div class="empty">Recent articles are currently unavailable.</div>}
+</div></section>
+<div slot="footer-note" class="sync-note">Last content update: {updated}</div>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import { getJournalData } from '../../data.js';
+export function getStaticPaths(){const data=getJournalData();return (data.pages||[]).map(p=>({params:{slug:p.slug},props:{page:p}}));}
+const { page } = Astro.props;
+const target = page.sourceUrl || `https://dergipark.org.tr/en/pub/journalata/${page.slug}`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content={`0;url=${target}`} />
+  <link rel="canonical" href={target} />
+  <title>Redirecting to Journal ATA on DergiPark</title>
+  <script is:inline define:vars={{ target }}>window.location.replace(target);</script>
+</head>
+<body>
+  <p>This page has moved to the official Journal ATA page on DergiPark. <a href={target}>Continue to DergiPark</a>.</p>
+</body>
+</html>

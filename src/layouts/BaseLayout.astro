@@ -1,0 +1,49 @@
+---
+import '../styles/global.css?v=20261110-mobile-language-fit';
+const { title = 'Journal of Academic Tourism Analysis', description = 'Journal of Academic Tourism Analysis', lang = (Astro.url.pathname.startsWith('/tr/') ? 'tr' : 'en') } = Astro.props;
+const tr = lang === 'tr';
+const withLang = (url) => tr && !url.startsWith('/tr/') ? '/tr' + url : url;
+const switchPath = tr ? (Astro.url.pathname.startsWith('/tr') ? Astro.url.pathname.slice(3) || '/' : Astro.url.pathname) : '/tr' + (Astro.url.pathname === '/' ? '/' : Astro.url.pathname);
+const infoLinks = tr
+  ? [
+      ['Hakkında','https://dergipark.org.tr/tr/pub/journalata/about-journal'],
+      ['Amaç ve Kapsam','https://dergipark.org.tr/tr/pub/journalata/aim-and-scope'],
+      ['Ücret Politikası','https://dergipark.org.tr/tr/pub/journalata/price-policy'],
+      ['Dergi Kurulları','https://dergipark.org.tr/tr/pub/journalata/board'],
+      ['İstatistikler','https://dergipark.org.tr/tr/pub/journalata/rejection-statistics'],
+      ['Yazım Kuralları','https://dergipark.org.tr/tr/pub/journalata/writing-rules'],
+      ['Etik İlkeler ve Yayın Politikası','https://dergipark.org.tr/tr/pub/journalata/policy'],
+      ['Dizinler','https://dergipark.org.tr/tr/pub/journalata/indexes'],
+      ['Arşiv','https://dergipark.org.tr/tr/pub/journalata/archive'],
+      ['Yayın Süreci','https://dergipark.org.tr/tr/pub/journalata/page/21206'],
+      ['Açık Erişim Politikası','https://dergipark.org.tr/tr/pub/journalata/page/22077'],
+      ['Editoryal Politikalar','https://dergipark.org.tr/tr/pub/journalata/page/21211'],
+      ['Editör Rehberi','https://dergipark.org.tr/tr/pub/journalata/page/21214'],
+      ['Hakem Rehberi','https://dergipark.org.tr/tr/pub/journalata/page/21207'],
+    ]
+  : [
+      ['About','https://dergipark.org.tr/en/pub/journalata/about-journal'],
+      ['Aim & Scope','https://dergipark.org.tr/en/pub/journalata/aim-and-scope'],
+      ['Price Policy','https://dergipark.org.tr/en/pub/journalata/price-policy'],
+      ['Journal Boards','https://dergipark.org.tr/en/pub/journalata/board'],
+      ['Statistics','https://dergipark.org.tr/en/pub/journalata/rejection-statistics'],
+      ['Author Guidelines','https://dergipark.org.tr/en/pub/journalata/writing-rules'],
+      ['Ethical Principles and Publication Policy','https://dergipark.org.tr/en/pub/journalata/policy'],
+      ['Indexes','https://dergipark.org.tr/en/pub/journalata/indexes'],
+      ['Archive','https://dergipark.org.tr/en/pub/journalata/archive'],
+      ['Publication Process','https://dergipark.org.tr/en/pub/journalata/page/21206'],
+      ['Open Access Policy','https://dergipark.org.tr/en/pub/journalata/page/22077'],
+      ['Editorial Policies','https://dergipark.org.tr/en/pub/journalata/page/21211'],
+      ['Editor Guidelines','https://dergipark.org.tr/en/pub/journalata/page/21214'],
+      ['Reviewer Guidelines','https://dergipark.org.tr/en/pub/journalata/page/21207'],
+    ];
+const infoHeading = tr ? 'Dergi Bilgileri' : 'Journal Information';
+const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcementsUrl = 'https://dergipark.org.tr/' + (tr ? 'tr' : 'en') + '/journalata/announcements/2772';
+---
+<html lang={lang}>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={description}/><meta name="theme-color" content="#fcfcfa"/><title>{title} | Journal of Academic Tourism Analysis</title></head>
+<body>
+<header class="header"><div class="wrap nav"><a class="brand" href={withLang('/')}><img class="brand-logo" src="/logo.png" alt="Journal ATA"/><span><strong>Journal ATA</strong></span></a><nav class="navlinks language-switch" aria-label={tr ? 'Dil seçimi' : 'Language selection'}><a href={tr ? Astro.url.pathname : switchPath} aria-current={tr ? 'page' : undefined}>Türkçe</a><span aria-hidden="true">|</span><a href={tr ? switchPath : Astro.url.pathname} aria-current={!tr ? 'page' : undefined}>English</a></nav></div></header>
+<slot/>
+<footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-info"><h4>{infoHeading}</h4><div class="footer-info-links">{infoLinks.map(([label,url])=><a class={label === 'Etik İlkeler ve Yayın Politikası' || label === 'Ethical Principles and Publication Policy' ? 'footer-long-link' : undefined} href={url}>{label}</a>)}<a href={announcementsUrl}>{announcementsLabel}</a></div></div></div><div class="footer-contact"><h4>{tr ? 'İletişim' : 'Contact'}</h4><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/page/17681' : 'https://dergipark.org.tr/en/pub/journalata/page/17681'}>{tr ? 'Editoryal Ofis' : 'Editorial Office'}</a><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/contacts' : 'https://dergipark.org.tr/en/pub/journalata/contacts'}>{tr ? 'İletişime Geç ↗' : 'Contact Us ↗'}</a></div><div class="footer-bottom">© {new Date().getFullYear()} Journal ATA<slot name="footer-note"/></div></div></footer>
+</body></html>
