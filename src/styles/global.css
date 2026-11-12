@@ -367,3 +367,7 @@ html[lang="en"] .meta-strip .meta:nth-child(4) b{font-size:14px}
   .navlinks.language-switch a{padding:6px 3px}
   .navlinks.language-switch>span{margin-inline:2px}
 }
+
+
+/* Keep the homepage tagline left-aligned for easy reading. */
+.hero p{text-align:left;text-justify:auto}
