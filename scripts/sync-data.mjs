@@ -38,6 +38,24 @@ const unique=new Map();for(const a of all){const key=a.url||a.doi||a.title; if(k
 async function readRss(){const items=[];for(const url of RSS){try{const xml=await get(url);const doc=parser.parse(xml);const channel=findKey(doc,'channel')||doc;const entries=findKey(channel,'item');for(const entry of (Array.isArray(entries)?entries:entries?[entries]:[])){const title=text(findKey(entry,'title'));const link=text(findKey(entry,'link'));const desc=text(findKey(entry,'description'));const creator=text(findKey(entry,'creator'))||text(findKey(entry,'author'));const date=text(findKey(entry,'pubDate'));items.push({title,url:link,abstract:desc.replace(/<[^>]*>/g,' ').trim(),authors:creator,date:date.slice(0,16)});}}catch(e){console.warn('RSS unavailable:',url,e.message);}}return items;}
 async function discoverPages(locale='en'){const html=await get(`${BASE}/${locale}/pub/${JOURNAL}`);const $=cheerio.load(html);const found=[];for(const [slug,namesEn,namesTr] of pageHints){const names=locale==='tr'?namesTr:namesEn;let match=null;$('a[href]').each((_,el)=>{if(match)return;const label=$(el).text().replace(/\s+/g,' ').trim().toLocaleLowerCase(locale==='tr'?'tr':'en');if(names.some(n=>label===n.toLocaleLowerCase(locale==='tr'?'tr':'en'))){const href=$(el).attr('href');if(href)match=new URL(href,BASE).href;}});if(!match)continue;try{const raw=await get(match);const p=cheerio.load(raw);p('script,style,nav,header,footer,iframe,object,embed,form,button,input,textarea,select,svg,math,link,meta,base,.breadcrumb,.breadcrumbs,.sidebar,.menu').remove();let main=p('main').first();if(!main.length)main=p('#content').first();if(!main.length)main=p('.page-content').first();if(!main.length)main=p('body');main.find('*').each((_,el)=>{for(const [name,value] of Object.entries(el.attribs||{})){if(/^on/i.test(name)||name==='srcdoc'||name==='style'||name==='srcset'||name==='class'||name==='id'){p(el).removeAttr(name);continue;}if((name==='width'||name==='height')&&p(el).is('img')){p(el).removeAttr(name);continue;}if(name==='href'||name==='src'||name==='poster'){try{const resolved=new URL(value,match);if(!['http:','https:','mailto:','tel:'].includes(resolved.protocol)||(name!=='href'&&!['http:','https:'].includes(resolved.protocol)))p(el).removeAttr(name);else p(el).attr(name,resolved.href);}catch{p(el).removeAttr(name);}}}if(p(el).attr('target')==='_blank')p(el).attr('rel','noopener noreferrer');});const title=p('h1').first().text().trim()||names[0];const htmlContent=main.html()||'';found.push({slug,title,sourceUrl:match,html:htmlContent,text:main.text().replace(/\s+/g,' ').trim()});}catch(e){console.warn('Page unavailable:',match,e.message);}}
 return found;}
+async function readTimelineStats(){
+  const html=await get(`${BASE}/en/pub/${JOURNAL}`);
+  const $=cheerio.load(html);
+  const pageText=$('body').text().replace(/\s+/g,' ').trim();
+  const metrics=[
+    ['firstDecision','Time to First Decision'],
+    ['finalDecision','Time to Final Decision'],
+    ['publication','Time to Publication']
+  ];
+  const stats={};
+  for(const [key,label] of metrics){
+    const at=pageText.toLowerCase().indexOf(label.toLowerCase());
+    const match=at<0?null:pageText.slice(at+label.length,at+label.length+60).match(/^\s*[:：]?\s*(\d{1,3})\s*days?\b/i);
+    if(!match)throw new Error(`Could not read DergiPark metric: ${label}`);
+    stats[key]=Number(match[1]);
+  }
+  return stats;
+}
 async function readAnnouncements(locale='en'){
   const html=await get(`${BASE}/${locale}/pub/${JOURNAL}`);
   const $=cheerio.load(html);
@@ -64,6 +82,7 @@ async function readAnnouncements(locale='en'){
 }
 let previous={};try{previous=JSON.parse(await fs.readFile(OUT,'utf8'));}catch{}
 const result={updatedAt:new Date().toISOString(),articles:previous.articles||[],pages:previous.pages||[],stats:previous.stats||[],announcements:previous.announcements||[],sourceStatus:{}};
+try{result.stats=await readTimelineStats();result.sourceStatus.stats='ok';}catch(e){console.warn('Statistics sync failed:',e.message);result.sourceStatus.stats=`error: ${e.message}`;}
 try{const a=await readOai();if(a.length){result.articles=a;result.sourceStatus.oai=`ok:${a.length}`;}else result.sourceStatus.oai='empty: previous data retained';}catch(e){console.warn('OAI sync failed:',e.message);result.sourceStatus.oai=`error: ${e.message}`;}
 try{const rss=await readRss();if(rss.length){result.latestRss=rss;result.sourceStatus.rss=`ok:${rss.length}`;}else result.sourceStatus.rss='empty';}catch(e){result.sourceStatus.rss=`error: ${e.message}`;}
 try{const [announcements,announcementsTr]=await Promise.all([readAnnouncements('en'),readAnnouncements('tr')]);if(announcements.length){const trById=new Map(announcementsTr.map(item=>[item.id,item]));result.announcements=announcements.map(item=>{const tr=trById.get(item.id)||{};return {...item,titleTr:tr.title||'',dateTr:tr.date||item.date||''};});result.sourceStatus.announcements=`ok:${announcements.length}/${announcementsTr.length} (en/tr)`;}else result.sourceStatus.announcements='no announcements found: previous data retained';}catch(e){console.warn('Announcement sync failed:',e.message);result.sourceStatus.announcements=`error: ${e.message}`;}
