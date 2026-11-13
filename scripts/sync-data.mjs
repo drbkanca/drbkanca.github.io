@@ -61,16 +61,16 @@ async function readTimelineStats(){
 async function readImpactVisibility(){
   const html=await get(`${BASE}/en/pub/${JOURNAL}`);
   const $=cheerio.load(html);
-  const pageText=$('body').text().replace(/\\s+/g,' ').trim();
+  const pageText=$('body').text().replace(/\s+/g,' ').trim();
   const readCount=(pattern,label)=>{
     const match=pageText.match(pattern);
     if(!match)throw new Error(`Could not read DergiPark impact metric: ${label}`);
-    return match[1].replace(/\\s+/g,'').replace(/,/g,'');
+    return match[1].replace(/\s+/g,'').replace(/,/g,'');
   };
   return {
-    views:readCount(/Articles\\s+View\\s+Count\\s*[:：]?\\s*([\\d.,]+\\s*[KMB]?)/i,'Articles View Count'),
-    downloads:readCount(/Articles\\s+Download\\s+Count\\s*[:：]?\\s*([\\d.,]+\\s*[KMB]?)/i,'Articles Download Count'),
-    favorites:readCount(/Articles\\s+Favorite\\s+Count\\s*[:：]?\\s*([\\d.,]+\\s*[KMB]?)/i,'Articles Favorite Count')
+    views:readCount(/Articles\s+View\s+Count\s*[:：]?\s*([\d.,]+\s*[KMB]?)/i,'Articles View Count'),
+    downloads:readCount(/Articles\s+Download\s+Count\s*[:：]?\s*([\d.,]+\s*[KMB]?)/i,'Articles Download Count'),
+    favorites:readCount(/Articles\s+Favorite\s+Count\s*[:：]?\s*([\d.,]+\s*[KMB]?)/i,'Articles Favorite Count')
   };
 }
 async function readAnnouncements(locale='en'){
