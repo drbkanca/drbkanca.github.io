@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css?v=20261110-mobile-language-fit';
+import '../styles/global.css?v=20261113-about-order-justify';
 const { title = 'Journal of Academic Tourism Analysis', description = 'Journal of Academic Tourism Analysis', lang = (Astro.url.pathname.startsWith('/tr/') ? 'tr' : 'en') } = Astro.props;
 const tr = lang === 'tr';
 const withLang = (url) => tr && !url.startsWith('/tr/') ? '/tr' + url : url;
