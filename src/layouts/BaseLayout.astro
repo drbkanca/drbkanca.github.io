@@ -10,11 +10,13 @@ const infoLinks = tr
       ['Amaç ve Kapsam','https://dergipark.org.tr/tr/pub/journalata/aim-and-scope'],
       ['Ücret Politikası','https://dergipark.org.tr/tr/pub/journalata/price-policy'],
       ['Dergi Kurulları','https://dergipark.org.tr/tr/pub/journalata/board'],
-      ['İstatistikler','https://dergipark.org.tr/tr/pub/journalata/rejection-statistics'],
-      ['Yazım Kuralları','https://dergipark.org.tr/tr/pub/journalata/writing-rules'],
       ['Etik İlkeler ve Yayın Politikası','https://dergipark.org.tr/tr/pub/journalata/policy'],
+      ['Dergi İstatistikleri','https://dergipark.org.tr/tr/pub/journalata/rejection-statistics'],
+      ['Yazım Kuralları','https://dergipark.org.tr/tr/pub/journalata/writing-rules'],
       ['Dizinler','https://dergipark.org.tr/tr/pub/journalata/indexes'],
       ['Arşiv','https://dergipark.org.tr/tr/pub/journalata/archive'],
+      ['Arşiv Politikası','https://dergipark.org.tr/tr/pub/journalata/page/22243'],
+      ['Düzeltme ve Geri Çekme Politikası','https://dergipark.org.tr/tr/pub/journalata/page/22247'],
       ['Yayın Süreci','https://dergipark.org.tr/tr/pub/journalata/page/21206'],
       ['Açık Erişim Politikası','https://dergipark.org.tr/tr/pub/journalata/page/22077'],
       ['Editoryal Politikalar','https://dergipark.org.tr/tr/pub/journalata/page/21211'],
@@ -26,11 +28,13 @@ const infoLinks = tr
       ['Aim & Scope','https://dergipark.org.tr/en/pub/journalata/aim-and-scope'],
       ['Price Policy','https://dergipark.org.tr/en/pub/journalata/price-policy'],
       ['Journal Boards','https://dergipark.org.tr/en/pub/journalata/board'],
-      ['Statistics','https://dergipark.org.tr/en/pub/journalata/rejection-statistics'],
-      ['Author Guidelines','https://dergipark.org.tr/en/pub/journalata/writing-rules'],
       ['Ethical Principles and Publication Policy','https://dergipark.org.tr/en/pub/journalata/policy'],
+      ['Journal Statistics','https://dergipark.org.tr/en/pub/journalata/rejection-statistics'],
+      ['Author Guidelines','https://dergipark.org.tr/en/pub/journalata/writing-rules'],
       ['Indexes','https://dergipark.org.tr/en/pub/journalata/indexes'],
       ['Archive','https://dergipark.org.tr/en/pub/journalata/archive'],
+      ['Archive Policy','https://dergipark.org.tr/en/pub/journalata/page/22243'],
+      ['Correction and Retraction Policy','https://dergipark.org.tr/en/pub/journalata/page/22247'],
       ['Publication Process','https://dergipark.org.tr/en/pub/journalata/page/21206'],
       ['Open Access Policy','https://dergipark.org.tr/en/pub/journalata/page/22077'],
       ['Editorial Policies','https://dergipark.org.tr/en/pub/journalata/page/21211'],
@@ -45,5 +49,5 @@ const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcement
 <body>
 <header class="header"><div class="wrap nav"><a class="brand" href={withLang('/')}><img class="brand-logo" src="/logo.png" alt="Journal ATA"/><span><strong>Journal ATA</strong></span></a><nav class="navlinks language-switch" aria-label={tr ? 'Dil seçimi' : 'Language selection'}><a href={tr ? Astro.url.pathname : switchPath} aria-current={tr ? 'page' : undefined}>Türkçe</a><span aria-hidden="true">|</span><a href={tr ? switchPath : Astro.url.pathname} aria-current={!tr ? 'page' : undefined}>English</a></nav></div></header>
 <slot/>
-<footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-info"><h4>{infoHeading}</h4><div class="footer-info-links">{infoLinks.map(([label,url])=><a class={label === 'Etik İlkeler ve Yayın Politikası' || label === 'Ethical Principles and Publication Policy' ? 'footer-long-link' : undefined} href={url}>{label}</a>)}<a href={announcementsUrl}>{announcementsLabel}</a></div></div></div><div class="footer-contact"><h4>{tr ? 'İletişim' : 'Contact'}</h4><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/page/17681' : 'https://dergipark.org.tr/en/pub/journalata/page/17681'}>{tr ? 'Editoryal Ofis' : 'Editorial Office'}</a><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/contacts' : 'https://dergipark.org.tr/en/pub/journalata/contacts'}>{tr ? 'İletişime Geç ↗' : 'Contact Us ↗'}</a></div><div class="footer-bottom">© {new Date().getFullYear()} Journal ATA<slot name="footer-note"/></div></div></footer>
+<footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-info"><h4>{infoHeading}</h4><div class="footer-info-links">{infoLinks.map(([label,url])=><a class={label === 'Etik İlkeler ve Yayın Politikası' || label === 'Ethical Principles and Publication Policy' || label === 'Düzeltme ve Geri Çekme Politikası' || label === 'Correction and Retraction Policy' ? 'footer-long-link' : undefined} href={url}>{label}</a>)}<a href={announcementsUrl}>{announcementsLabel}</a></div></div></div><div class="footer-contact"><h4>{tr ? 'İletişim' : 'Contact'}</h4><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/page/17681' : 'https://dergipark.org.tr/en/pub/journalata/page/17681'}>{tr ? 'Editoryal Ofis' : 'Editorial Office'}</a><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/contacts' : 'https://dergipark.org.tr/en/pub/journalata/contacts'}>{tr ? 'İletişime Geç ↗' : 'Contact Us ↗'}</a></div><div class="footer-bottom">© {new Date().getFullYear()} Journal ATA<slot name="footer-note"/></div></div></footer>
 </body></html>
