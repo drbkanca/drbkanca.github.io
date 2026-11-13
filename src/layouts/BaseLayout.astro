@@ -1,8 +1,8 @@
 ---
-import '../styles/global.css?v=20261113-live-title-domain-v3';
+import '../styles/global.css?v=20261113-share-title-v4';
 const { title = 'Journal of Academic Tourism Analysis', description = 'Journal of Academic Tourism Analysis', lang = (Astro.url.pathname.startsWith('/tr/') ? 'tr' : 'en') } = Astro.props;
 const tr = lang === 'tr';
-const pageTitle = 'Journal ATA | Journal of Academic Tourism Analysis | Akademik Turizm Analizi Dergisi';
+const pageTitle = 'Journal of Academic Tourism Analysis (Journal ATA) | Akademik Turizm Analizi Dergisi';
 const socialUrl = `https://journalata.com${Astro.url.pathname}`;
 const socialImage = 'https://journalata.com/journal-cover.jpg';
 const withLang = (url) => tr && !url.startsWith('/tr/') ? '/tr' + url : url;
@@ -56,7 +56,7 @@ const infoHeading = tr ? 'Dergi Bilgileri' : 'Journal Information';
 const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcementsUrl = 'https://dergipark.org.tr/' + (tr ? 'tr' : 'en') + '/journalata/announcements/2772';
 ---
 <html lang={lang}>
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={description}/><meta name="theme-color" content="#fcfcfa"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Journal ATA"/><meta property="og:title" content={pageTitle}/><meta property="og:description" content={description}/><meta property="og:url" content={socialUrl}/><meta property="og:image" content={socialImage}/><meta property="og:image:alt" content="Journal ATA — Journal of Academic Tourism Analysis — Akademik Turizm Analizi Dergisi"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={pageTitle}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content={socialImage}/><title>{pageTitle}</title></head>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={description}/><meta name="theme-color" content="#fcfcfa"/><meta property="og:type" content="website"/><meta property="og:site_name" content={pageTitle}/><meta property="og:title" content={pageTitle}/><meta property="og:description" content={description}/><meta property="og:url" content={socialUrl}/><meta property="og:image" content={socialImage}/><meta property="og:image:alt" content="Journal ATA — Journal of Academic Tourism Analysis — Akademik Turizm Analizi Dergisi"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={pageTitle}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content={socialImage}/><title>{pageTitle}</title></head>
 <body>
 <header class="header"><div class="wrap nav"><a class="brand" href={withLang('/')}><img class="brand-logo" src="/logo.png" alt="Journal ATA"/><span><strong>Journal ATA</strong></span></a><nav class="navlinks language-switch" aria-label={tr ? 'Dil seçimi' : 'Language selection'}><a href={tr ? Astro.url.pathname : switchPath} aria-current={tr ? 'page' : undefined}>Türkçe</a><span aria-hidden="true">|</span><a href={tr ? switchPath : Astro.url.pathname} aria-current={!tr ? 'page' : undefined}>English</a></nav></div></header>
 <slot/>
