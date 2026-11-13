@@ -541,3 +541,15 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .hero-actions .button{width:100%;min-width:0;display:flex;align-items:center;justify-content:center;padding-inline:8px}
   .hero-actions .share-status{grid-column:1 / -1}
 }
+/* Mobile CTA order: submission and reviewer first, feedback and sharing second. */
+@media(max-width:760px){
+  .hero-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .hero-actions::before{content:none!important;display:none!important}
+  .hero-actions>*{order:0!important;min-width:0}
+  .hero-actions>a.button:nth-of-type(1){grid-column:1;grid-row:1}
+  .hero-actions>a.button:nth-of-type(2){grid-column:2;grid-row:1}
+  .hero-actions>a.feedback-button{grid-column:1;grid-row:2}
+  .hero-actions>button.share-button{grid-column:2;grid-row:2}
+  .hero-actions .share-status{grid-column:1 / -1;grid-row:3}
+  .hero-actions .button{width:100%;min-width:0;padding-inline:6px;font-size:13px;white-space:nowrap}
+}
