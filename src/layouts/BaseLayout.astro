@@ -61,4 +61,27 @@ const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcement
 <header class="header"><div class="wrap nav"><a class="brand" href={withLang('/')}><img class="brand-logo" src="/logo.png" alt="Journal ATA"/><span><strong>Journal ATA</strong></span></a><nav class="navlinks language-switch" aria-label={tr ? 'Dil seçimi' : 'Language selection'}><a href={tr ? Astro.url.pathname : switchPath} aria-current={tr ? 'page' : undefined}>Türkçe</a><span aria-hidden="true">|</span><a href={tr ? switchPath : Astro.url.pathname} aria-current={!tr ? 'page' : undefined}>English</a></nav></div></header>
 <slot/>
 <footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-info"><h4>{infoHeading}</h4><div class="footer-info-links">{infoLinks.map(([label,url])=><a class={[label === 'Etik İlkeler ve Yayın Politikası' || label === 'Ethical Principles and Publication Policy' ? 'footer-ethics-link' : '', label === 'Düzeltme ve Geri Çekme Politikası' || label === 'Correction and Retraction Policy' ? 'footer-correction-link' : '', label.length > 24 ? 'footer-long-link' : ''].filter(Boolean).join(' ') || undefined} href={url}>{label === 'Ethical Principles and Publication Policy' ? <>Ethical Principles and Publication&nbsp;<br class="mobile-policy-break" />Policy</> : label === 'Etik İlkeler ve Yayın Politikası' ? <>Etik İlkeler ve Yayın&nbsp;<br class="mobile-policy-break" />Politikası</> : label === 'Correction and Retraction Policy' ? <>Correction and Retraction&nbsp;<br class="mobile-policy-break" />Policy</> : label === 'Düzeltme ve Geri Çekme Politikası' ? <>Düzeltme ve Geri Çekme&nbsp;<br class="mobile-policy-break" />Politikası</> : label}</a>)}<a href={announcementsUrl}>{announcementsLabel}</a></div></div></div><div class="footer-bottom">© {new Date().getFullYear()} Journal ATA<slot name="footer-note"/></div></div></footer>
+<script is:inline>
+(() => {
+  const prepareLinks = (root = document) => {
+    const links = [];
+    if (root instanceof Element && root.matches('a[href]')) links.push(root);
+    if (root.querySelectorAll) links.push(...root.querySelectorAll('a[href]'));
+    for (const link of links) {
+      const href = link.getAttribute('href') || '';
+      if (/^(mailto:|tel:|javascript:|data:)/i.test(href)) continue;
+      link.target = '_blank';
+      link.relList.add('noopener', 'noreferrer');
+    }
+  };
+  prepareLinks();
+  new MutationObserver(records => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (node instanceof Element) prepareLinks(node);
+      }
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 </body></html>
