@@ -381,3 +381,13 @@ html[lang="en"] .meta-strip .meta:nth-child(4) b{font-size:14px}
   .hero-actions .share-button{order:4}
   .hero-actions .share-status{order:5}
 }
+
+/* Keep long policy links on their own balanced footer positions. */
+@media(min-width:901px){
+  .footer-info-links{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .footer-info-links .footer-ethics-link{grid-column:1;grid-row:4}
+  .footer-info-links .footer-correction-link{grid-column:3;grid-row:4}
+}
+@media(max-width:900px){
+  .footer-info-links .footer-ethics-link,.footer-info-links .footer-correction-link{grid-column:auto;grid-row:auto}
+}
