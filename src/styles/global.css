@@ -466,3 +466,6 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .about-section .desktop-information-panel{display:none}
   .mobile-information-section{display:block}
 }
+
+/* Use the footer's complete set of 20 information links after latest articles on mobile. */
+@media(max-width:760px){.footer .footer-info{display:block}}
