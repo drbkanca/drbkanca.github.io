@@ -409,3 +409,6 @@ html[lang="en"] .meta-strip .meta:nth-child(4) b{font-size:14px}
   .footer-info-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}
   .footer-info-links a{white-space:normal}
 }
+
+/* Keep longer English footer labels on one line in the balanced grid. */
+html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
