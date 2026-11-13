@@ -22,6 +22,10 @@ const infoLinks = tr
       ['Editoryal Politikalar','https://dergipark.org.tr/tr/pub/journalata/page/21211'],
       ['Editör Rehberi','https://dergipark.org.tr/tr/pub/journalata/page/21214'],
       ['Hakem Rehberi','https://dergipark.org.tr/tr/pub/journalata/page/21207'],
+      ['Editoryal Ofis','https://dergipark.org.tr/tr/pub/journalata/page/17681'],
+      ['Dergi İletişim','https://dergipark.org.tr/tr/pub/journalata/contacts'],
+      ['Geri Bildirim','https://dergipark.org.tr/tr/feedback/journal/journalata/new'],
+
     ]
   : [
       ['About','https://dergipark.org.tr/en/pub/journalata/about-journal'],
@@ -40,6 +44,10 @@ const infoLinks = tr
       ['Editorial Policies','https://dergipark.org.tr/en/pub/journalata/page/21211'],
       ['Editor Guidelines','https://dergipark.org.tr/en/pub/journalata/page/21214'],
       ['Reviewer Guidelines','https://dergipark.org.tr/en/pub/journalata/page/21207'],
+      ['Editorial Office','https://dergipark.org.tr/en/pub/journalata/page/17681'],
+      ['Journal Contacts','https://dergipark.org.tr/en/pub/journalata/contacts'],
+      ['Feedback','https://dergipark.org.tr/en/feedback/journal/journalata/new'],
+
     ];
 const infoHeading = tr ? 'Dergi Bilgileri' : 'Journal Information';
 const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcementsUrl = 'https://dergipark.org.tr/' + (tr ? 'tr' : 'en') + '/journalata/announcements/2772';
@@ -49,5 +57,5 @@ const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcement
 <body>
 <header class="header"><div class="wrap nav"><a class="brand" href={withLang('/')}><img class="brand-logo" src="/logo.png" alt="Journal ATA"/><span><strong>Journal ATA</strong></span></a><nav class="navlinks language-switch" aria-label={tr ? 'Dil seçimi' : 'Language selection'}><a href={tr ? Astro.url.pathname : switchPath} aria-current={tr ? 'page' : undefined}>Türkçe</a><span aria-hidden="true">|</span><a href={tr ? switchPath : Astro.url.pathname} aria-current={!tr ? 'page' : undefined}>English</a></nav></div></header>
 <slot/>
-<footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-info"><h4>{infoHeading}</h4><div class="footer-info-links">{infoLinks.map(([label,url])=><a class={label === 'Etik İlkeler ve Yayın Politikası' || label === 'Ethical Principles and Publication Policy' ? 'footer-ethics-link' : label === 'Düzeltme ve Geri Çekme Politikası' || label === 'Correction and Retraction Policy' ? 'footer-correction-link' : undefined} href={url}>{label}</a>)}<a href={announcementsUrl}>{announcementsLabel}</a></div></div></div><div class="footer-contact"><h4>{tr ? 'İletişim' : 'Contact'}</h4><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/page/17681' : 'https://dergipark.org.tr/en/pub/journalata/page/17681'}>{tr ? 'Editoryal Ofis' : 'Editorial Office'}</a><a href={tr ? 'https://dergipark.org.tr/tr/pub/journalata/contacts' : 'https://dergipark.org.tr/en/pub/journalata/contacts'}>{tr ? 'İletişime Geç ↗' : 'Contact Us ↗'}</a></div><div class="footer-bottom">© {new Date().getFullYear()} Journal ATA<slot name="footer-note"/></div></div></footer>
+<footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-info"><h4>{infoHeading}</h4><div class="footer-info-links">{infoLinks.map(([label,url])=><a class={label === 'Etik İlkeler ve Yayın Politikası' || label === 'Ethical Principles and Publication Policy' ? 'footer-ethics-link' : label === 'Düzeltme ve Geri Çekme Politikası' || label === 'Correction and Retraction Policy' ? 'footer-correction-link' : undefined} href={url}>{label}</a>)}<a href={announcementsUrl}>{announcementsLabel}</a></div></div></div><div class="footer-contact"><h4>{tr ? 'İletişim' : 'Contact'}</h4><a href={tr ? 'https://dergipark.org.tr/tr/feedback/journal/journalata/new' : 'https://dergipark.org.tr/en/feedback/journal/journalata/new'}>{tr ? 'Geri Bildirim' : 'Feedback'}</a></div><div class="footer-bottom">© {new Date().getFullYear()} Journal ATA<slot name="footer-note"/></div></div></footer>
 </body></html>
