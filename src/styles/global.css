@@ -469,3 +469,13 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
 
 /* Use the footer's complete set of 20 information links after latest articles on mobile. */
 @media(max-width:760px){.footer .footer-info{display:block}}
+
+.mobile-policy-break{display:none}
+@media(max-width:760px){
+  .footer-info-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .footer-info-links .footer-ethics-link,.footer-info-links .footer-correction-link{grid-row:1;white-space:normal;font-size:9.5px}
+  .footer-info-links .footer-ethics-link{grid-column:1}
+  .footer-info-links .footer-correction-link{grid-column:2}
+  .mobile-policy-break{display:inline}
+}
+@media(max-width:360px){.footer-info-links .footer-ethics-link,.footer-info-links .footer-correction-link{font-size:9px}}
