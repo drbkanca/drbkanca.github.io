@@ -479,3 +479,12 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .mobile-policy-break{display:inline}
 }
 @media(max-width:360px){.footer-info-links .footer-ethics-link,.footer-info-links .footer-correction-link{font-size:9px}}
+
+/* Keep About paragraphs justified in Turkish and English. */
+.about-panel p{text-align:justify;text-justify:inter-word}
+/* Mobile sequence: About, Announcements, Latest Articles, then Journal Information. */
+@media(max-width:760px){
+  .about-announcement-order{display:flex!important;flex-direction:column!important}
+  .about-announcement-order #about{order:0!important}
+  .about-announcement-order #announcements{order:1!important}
+}
