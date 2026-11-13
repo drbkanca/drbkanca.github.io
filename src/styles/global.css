@@ -488,3 +488,11 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .about-announcement-order #about{order:0!important}
   .about-announcement-order #announcements{order:1!important}
 }
+
+
+/* Keep the announcements action beside its heading on narrow screens. */
+@media(max-width:760px){
+  .announcement-section .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .announcement-section .section-head h2{margin:0;font-size:26px}
+  .announcement-section .section-head .button{flex:0 0 auto;min-height:42px;padding:9px 12px;font-size:12px;white-space:nowrap}
+}
