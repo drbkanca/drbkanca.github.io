@@ -58,6 +58,21 @@ async function readTimelineStats(){
   }
   return stats;
 }
+async function readImpactVisibility(){
+  const html=await get(`${BASE}/en/pub/${JOURNAL}`);
+  const $=cheerio.load(html);
+  const pageText=$('body').text().replace(/\\s+/g,' ').trim();
+  const readCount=(pattern,label)=>{
+    const match=pageText.match(pattern);
+    if(!match)throw new Error(`Could not read DergiPark impact metric: ${label}`);
+    return match[1].replace(/\\s+/g,'').replace(/,/g,'');
+  };
+  return {
+    views:readCount(/Articles\\s+View\\s+Count\\s*[:：]?\\s*([\\d.,]+\\s*[KMB]?)/i,'Articles View Count'),
+    downloads:readCount(/Articles\\s+Download\\s+Count\\s*[:：]?\\s*([\\d.,]+\\s*[KMB]?)/i,'Articles Download Count'),
+    favorites:readCount(/Articles\\s+Favorite\\s+Count\\s*[:：]?\\s*([\\d.,]+\\s*[KMB]?)/i,'Articles Favorite Count')
+  };
+}
 async function readAnnouncements(locale='en'){
   const html=await get(`${BASE}/${locale}/pub/${JOURNAL}`);
   const $=cheerio.load(html);
@@ -84,7 +99,7 @@ async function readAnnouncements(locale='en'){
 }
 let previous={};try{previous=JSON.parse(await fs.readFile(OUT,'utf8'));}catch{}
 const result={updatedAt:new Date().toISOString(),articles:previous.articles||[],pages:previous.pages||[],stats:previous.stats||[],announcements:previous.announcements||[],sourceStatus:{}};
-try{result.stats=await readTimelineStats();result.sourceStatus.stats='ok';}catch(e){console.warn('Statistics sync failed:',e.message);result.sourceStatus.stats=`error: ${e.message}`;}
+try{const impact=await readImpactVisibility();result.stats={...(previous.stats||{}),impact};result.sourceStatus.impact='ok';}catch(e){console.warn('Impact/visibility sync failed:',e.message);result.stats={...(previous.stats||{}),impact:previous.stats?.impact||{views:'5K',downloads:'16K',favorites:'11'}};result.sourceStatus.impact=`error: ${e.message}`;}
 try{const a=await readOai();if(a.length){result.articles=a;result.sourceStatus.oai=`ok:${a.length}`;}else result.sourceStatus.oai='empty: previous data retained';}catch(e){console.warn('OAI sync failed:',e.message);result.sourceStatus.oai=`error: ${e.message}`;}
 try{const rss=await readRss();if(rss.length){result.latestRss=rss;result.sourceStatus.rss=`ok:${rss.length}`;}else result.sourceStatus.rss='empty';}catch(e){result.sourceStatus.rss=`error: ${e.message}`;}
 try{const [announcements,announcementsTr]=await Promise.all([readAnnouncements('en'),readAnnouncements('tr')]);if(announcements.length){const trById=new Map(announcementsTr.map(item=>[item.id,item]));result.announcements=announcements.map(item=>{const tr=trById.get(item.id)||{};return {...item,titleTr:tr.title||'',dateTr:tr.date||item.date||''};});result.sourceStatus.announcements=`ok:${announcements.length}/${announcementsTr.length} (en/tr)`;}else result.sourceStatus.announcements='no announcements found: previous data retained';}catch(e){console.warn('Announcement sync failed:',e.message);result.sourceStatus.announcements=`error: ${e.message}`;}
