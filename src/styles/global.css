@@ -511,3 +511,13 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
  .hero-actions .feedback-button{order:5}
  .mobile-policy-break{display:inline}
 }
+
+
+/* Four compact journal feature tags above each language homepage title. */
+.hero .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.hero-tags span{border-color:#e6c49a;background:#fffaf2;color:#59391f}
+.hero-actions .feedback-button{background:#d97516;border-color:#d97516;color:#fff}
+.hero-actions .feedback-button:hover{background:#bd5f0b;border-color:#bd5f0b;color:#fff}
+.hero-actions .share-button{background:#fffaf2;border-color:#bd873e;color:#493624}
+.hero-actions .share-button:hover{background:#f5e6cf;color:#493624}
+@media(min-width:901px){.meta-strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
