@@ -16,7 +16,7 @@ const pageTitleTr = (p) => p.slug === 'statistics' ? 'Dergi İstatistikleri' : p
 const articleUrl = (a) => (a.url || 'https://dergipark.org.tr/tr/pub/journalata').replace('/en/pub/', '/tr/pub/');const announcementHome = 'https://dergipark.org.tr/tr/journalata/announcements/2772';
 const announcementFallback = 'Dergi, 2027 itibarıyla yayın dilini yalnızca İngilizce olarak sürdürecek. Duyuru, yeni yayın dili uygulamasını ve makale gönderimlerine ilişkin güncellemeyi açıklıyor.';
 ---
-<BaseLayout title="Ana Sayfa" description="Journal of Academic Tourism Analysis — Elmas Açık Erişim modelinde, uluslararası ve çift kör hakemli dergi" lang="tr">
+<BaseLayout title="Ana Sayfa" description="Journal ATA; uluslararası, çift kör hakemli ve sürekli yayın yapan, yazarlardan ve okuyuculardan ücret almayan Elmas Açık Erişim dergisidir." lang="tr">
 <section class="hero"><div class="wrap hero-layout"><div class="hero-content">
   <div class="hero-tags" aria-label="Dergi özellikleri"><span>Elmas Açık Erişim</span><span>Çift kör hakemlik</span><span>Sürekli yayın</span><span>Ücretsiz yayın</span></div>
   <h1>Journal of Academic Tourism Analysis</h1><div class="hero-translation">Akademik Turizm Analizi Dergisi</div>
@@ -27,7 +27,7 @@ const announcementFallback = 'Dergi, 2027 itibarıyla yayın dilini yalnızca İ
   const shareButton = document.querySelector("[data-share-page]");
   const shareStatus = document.querySelector("[data-share-status]");
   shareButton?.addEventListener("click", async () => {
-    const shareData = { title: document.title, text: document.querySelector('meta[name="description"]')?.content || document.title, url: location.href };
+    const shareData = { title: document.querySelector('meta[property="og:title"]')?.content || "Journal ATA", text: document.querySelector('meta[name="description"]')?.content || "Journal ATA", url: location.href };
     if (navigator.share) {
       try { await navigator.share(shareData); return; }
       catch (error) { if (error?.name === "AbortError") return; }
