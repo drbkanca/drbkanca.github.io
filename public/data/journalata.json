@@ -565,7 +565,12 @@
   "stats": {
     "firstDecision": 7,
     "finalDecision": 68,
-    "publication": 25
+    "publication": 25,
+    "impact": {
+      "views": "5K",
+      "downloads": "16K",
+      "favorites": "11"
+    }
   },
   "announcements": [
     {
