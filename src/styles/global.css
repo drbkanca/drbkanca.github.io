@@ -418,3 +418,10 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .footer-info-links{grid-template-columns:minmax(0,1fr);gap:7px}
   .footer-info-links a{white-space:nowrap;font-size:11px}
 }
+
+/* Keep two footer columns on mobile; let only the longest policy labels use both. */
+@media(max-width:760px){
+  .footer-info-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+  .footer-info-links a{white-space:nowrap;font-size:11px}
+  .footer-info-links .footer-ethics-link,.footer-info-links .footer-correction-link{grid-column:1 / -1}
+}
