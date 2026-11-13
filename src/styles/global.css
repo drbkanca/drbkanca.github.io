@@ -412,3 +412,9 @@ html[lang="en"] .meta-strip .meta:nth-child(4) b{font-size:14px}
 
 /* Keep longer English footer labels on one line in the balanced grid. */
 html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
+
+/* Keep footer labels on one line on narrow screens by using a single column. */
+@media(max-width:760px){
+  .footer-info-links{grid-template-columns:minmax(0,1fr);gap:7px}
+  .footer-info-links a{white-space:nowrap;font-size:11px}
+}
