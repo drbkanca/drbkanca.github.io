@@ -43,6 +43,5 @@ const announcementFallback = 'Dergi, 2027 itibarıyla yayın dilini yalnızca İ
 <section class="section latest-section" id="latest"><div class="wrap"><div class="section-head"><h2>Son Makaleler</h2><a class="button" href="/tr/page/archive">Arşivi Gör ↗</a></div>
 {articles.length ? <div class="grid">{articles.map(a=>{const title=a.titleTr||a.title;const abstract=a.abstractTr||a.abstract;return <article class="article"><span class="tag">Araştırma makalesi</span><h3>{title || 'Başlıksız makale'}</h3><p>{(abstract || '').slice(0,210)}{(abstract || '').length>210?'…':''}</p><div class="byline">{a.authors || 'Yazar bilgisi'}{a.date ? ' · ' + a.date : ''}</div><a class="read" href={articleUrl(a)} target="_blank" rel="noreferrer">DergiPark makalesini aç ↗</a></article>})}</div> : <div class="empty">Son makaleler şu anda görüntülenemiyor.</div>}
 </div></section>
-<section class="section mobile-information-section"><div class="wrap"><div class="panel information-panel"><div class="eyebrow">Dergi Bilgileri</div><div class="quicklinks">{infoPages.map(p=><a href={p.url || (p.sourceUrl || '').replace('/en/pub/','/tr/pub/')}>{p.titleTr || pageTitleTr(p)}</a>)}</div></div></div></section>
 <div slot="footer-note" class="sync-note">Son içerik güncellemesi: {updated}</div>
 </BaseLayout>
