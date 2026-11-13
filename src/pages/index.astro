@@ -15,7 +15,7 @@ const updated = data.updatedAt ? new Date(data.updatedAt).toLocaleString('en-GB'
 const announcements = (data.announcements || []).slice(0, 3);const announcementHome = 'https://dergipark.org.tr/en/journalata/announcements/2772';
 const announcementFallback = 'From 2027, the journal will publish exclusively in English. The announcement outlines this language change and updates for manuscript submissions.';
 ---
-<BaseLayout title="Home" description="Journal of Academic Tourism Analysis — international, double-blind peer-reviewed and Diamond Open Access" lang="en">
+<BaseLayout title="Home" description="Journal ATA is an international, double-blind peer-reviewed journal with continuous publication under a Diamond Open Access model. Authors and readers pay no fees." lang="en">
 <section class="hero"><div class="wrap hero-layout"><div class="hero-content">
   <div class="hero-tags" aria-label="Journal characteristics"><span>Diamond Open Access</span><span>Double-blind peer review</span><span>Continuous publication</span><span>No APC</span></div>
   <h1>Journal of Academic Tourism Analysis</h1><div class="hero-translation">Akademik Turizm Analizi Dergisi</div>
@@ -26,7 +26,7 @@ const announcementFallback = 'From 2027, the journal will publish exclusively in
   const shareButton = document.querySelector("[data-share-page]");
   const shareStatus = document.querySelector("[data-share-status]");
   shareButton?.addEventListener("click", async () => {
-    const shareData = { title: document.title, text: document.querySelector('meta[name="description"]')?.content || document.title, url: location.href };
+    const shareData = { title: document.querySelector('meta[property="og:title"]')?.content || "Journal ATA", text: document.querySelector('meta[name="description"]')?.content || "Journal ATA", url: location.href };
     if (navigator.share) {
       try { await navigator.share(shareData); return; }
       catch (error) { if (error?.name === "AbortError") return; }
