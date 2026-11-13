@@ -454,3 +454,6 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .about-announcement-order #about{order:0}
   .about-announcement-order #announcements{order:1}
 }
+
+/* Journal Information is already shown in the homepage panel on mobile. */
+@media(max-width:760px){.footer .footer-info{display:none}}
