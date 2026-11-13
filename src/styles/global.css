@@ -531,3 +531,13 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
 @media(max-width:760px){.metrics-section .metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 .hero-actions .share-button{background:#f2c319;border-color:#e4b400;color:#493624}
 .hero-actions .share-button:hover{background:#dfae00;border-color:#d3a300;color:#30271f}
+
+/* Align the homepage feature labels and actions on mobile. */
+.hero-tags span{border-color:#c5b8a6;background:#fff;color:#493624}
+@media(max-width:760px){
+  .hero .hero-tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .hero .hero-tags span{justify-content:center;min-width:0;text-align:center}
+  .hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .hero-actions .button{width:100%;min-width:0;display:flex;align-items:center;justify-content:center;padding-inline:8px}
+  .hero-actions .share-status{grid-column:1 / -1}
+}
