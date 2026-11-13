@@ -496,3 +496,18 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .announcement-section .section-head h2{margin:0;font-size:26px}
   .announcement-section .section-head .button{flex:0 0 auto;min-height:42px;padding:9px 12px;font-size:12px;white-space:nowrap}
 }
+
+/* Homepage fact band: eight items in four columns, paired on mobile. */
+.meta-strip{grid-template-columns:repeat(4,minmax(0,1fr))}
+.meta-strip .meta{min-width:0}
+.meta-strip .meta b,.meta-strip .meta span{overflow-wrap:anywhere;word-break:normal}
+.metrics-section .metrics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px}
+.metrics-section .metrics-grid>div{min-width:0}
+.metrics-heading{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--muted);margin:0 0 8px}
+@media(max-width:760px){
+ .meta-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .metrics-section .metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .metrics-section .metrics-grid>div{padding:12px 14px}
+ .hero-actions .feedback-button{order:5}
+ .mobile-policy-break{display:inline}
+}
