@@ -99,6 +99,7 @@ async function readAnnouncements(locale='en'){
 }
 let previous={};try{previous=JSON.parse(await fs.readFile(OUT,'utf8'));}catch{}
 const result={updatedAt:new Date().toISOString(),articles:previous.articles||[],pages:previous.pages||[],stats:previous.stats||[],announcements:previous.announcements||[],sourceStatus:{}};
+try{const timeline=await readTimelineStats();result.stats={...(previous.stats||{}),...timeline};result.sourceStatus.timeline='ok';}catch(e){result.stats={...(previous.stats||{})};result.sourceStatus.timeline=`error: ${e.message}`;console.warn('Timeline statistics sync failed:',e.message);}
 try{const impact=await readImpactVisibility();result.stats={...(previous.stats||{}),impact};result.sourceStatus.impact='ok';}catch(e){console.warn('Impact/visibility sync failed:',e.message);result.stats={...(previous.stats||{}),impact:previous.stats?.impact||{views:'5K',downloads:'16K',favorites:'11'}};result.sourceStatus.impact=`error: ${e.message}`;}
 try{const a=await readOai();if(a.length){result.articles=a;result.sourceStatus.oai=`ok:${a.length}`;}else result.sourceStatus.oai='empty: previous data retained';}catch(e){console.warn('OAI sync failed:',e.message);result.sourceStatus.oai=`error: ${e.message}`;}
 try{const rss=await readRss();if(rss.length){result.latestRss=rss;result.sourceStatus.rss=`ok:${rss.length}`;}else result.sourceStatus.rss='empty';}catch(e){result.sourceStatus.rss=`error: ${e.message}`;}
