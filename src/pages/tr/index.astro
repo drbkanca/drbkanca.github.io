@@ -4,7 +4,7 @@ import { getJournalData } from '../../data.js';
 const data = getJournalData();
 const stats = data.stats || {};
 const articles = (data.articles || []).slice(0, 6);
-const infoPageOrder = ['aim-and-scope','publication-fees','editorial-board','publication-ethics','statistics','writing-rules','indexing','publication-process','open-access-policy','reviewer-guidelines','editorial-policies','editor-guidelines','editorial-office','archive','archive-policy','correction-retraction-policy','contact'];
+const infoPageOrder = ['aim-and-scope','publication-fees','editorial-board','publication-ethics','correction-retraction-policy','writing-rules','indexing','publication-process','open-access-policy','reviewer-guidelines','editorial-policies','editor-guidelines','editorial-office','archive','archive-policy','statistics','contact'];
 const pageOrder = Object.fromEntries(infoPageOrder.map((slug, index) => [slug, index]));
 const pages = (data.pages || []).sort((a, b) => (pageOrder[a.slug] ?? 999) - (pageOrder[b.slug] ?? 999));
 const knownPolicyPages = [{slug:'archive-policy',titleTr:'Arşiv Politikası',url:'https://dergipark.org.tr/tr/pub/journalata/page/22243'},{slug:'correction-retraction-policy',titleTr:'Düzeltme ve Geri Çekme Politikası',url:'https://dergipark.org.tr/tr/pub/journalata/page/22247'}];
