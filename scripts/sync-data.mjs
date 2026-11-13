@@ -25,7 +25,9 @@ const pageHints=[
  ['reviewer-guidelines',['Reviewer Guidelines'],['Hakem Rehberi']],
  ['editorial-office',['Editorial Office'],['Editoryal Ofis']],
  ['contact',['Journal Contact','Contact'],['Dergi İletişim']],
- ['archive',['Archive'],['Arşiv']]
+ ['archive',['Archive'],['Arşiv']],
+ ['archive-policy',['Archive Policy','Archiving Policy'],['Arşiv Politikası']],
+ ['correction-retraction-policy',['Correction and Retraction Policy','Corrections and Retractions Policy','Correction & Retraction Policy'],['Düzeltme ve Geri Çekme Politikası']]
 ];
 function text(v){if(v==null)return '';if(typeof v==='string')return v;if(typeof v==='number')return String(v);if(Array.isArray(v))return v.map(text).filter(Boolean).join('; ');if(typeof v==='object')return text(v['#text']??'');return '';}
 function decodeHtml(s=''){return s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'");}
