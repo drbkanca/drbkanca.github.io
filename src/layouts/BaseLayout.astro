@@ -69,7 +69,7 @@ const announcementsLabel = tr ? 'Duyurular' : 'Announcements';const announcement
     if (root.querySelectorAll) links.push(...root.querySelectorAll('a[href]'));
     for (const link of links) {
       const href = link.getAttribute('href') || '';
-      if (/^(mailto:|tel:|javascript:|data:)/i.test(href)) continue;
+      if (link.closest('.language-switch') || /^(mailto:|tel:|javascript:|data:)/i.test(href)) continue;
       link.target = '_blank';
       link.relList.add('noopener', 'noreferrer');
     }
