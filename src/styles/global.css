@@ -521,3 +521,13 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
 .hero-actions .share-button{background:#fffaf2;border-color:#bd873e;color:#493624}
 .hero-actions .share-button:hover{background:#f5e6cf;color:#493624}
 @media(min-width:901px){.meta-strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+
+/* Use the full row for the four core facts and six statistics. */
+@media(min-width:761px){.meta-strip{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(min-width:901px){html[lang="en"] .meta-strip{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+.metrics-section .metrics-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-width:900px){.metrics-section .metrics-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.metrics-section .metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.hero-actions .share-button{background:#f2c319;border-color:#e4b400;color:#493624}
+.hero-actions .share-button:hover{background:#dfae00;border-color:#d3a300;color:#30271f}
