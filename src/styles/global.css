@@ -440,3 +440,11 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .footer-info-links .footer-correction-link{grid-column:2;grid-row:1;white-space:normal;font-size:10px}
   .footer-info-links .footer-long-link:not(.footer-ethics-link):not(.footer-correction-link){grid-column:1 / -1;white-space:nowrap;font-size:11px}
 }
+
+/* Move announcements above journal information on mobile while preserving desktop order. */
+.about-announcement-order{display:contents}
+@media(max-width:760px){
+  .about-announcement-order{display:flex;flex-direction:column}
+  .about-announcement-order #announcements{order:0}
+  .about-announcement-order #about{order:1}
+}
