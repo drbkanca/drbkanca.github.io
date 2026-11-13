@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T17:56:46.186Z",
+  "updatedAt": "2026-11-13T19:08:48.402Z",
   "articles": [
     {
       "title": "A Netnographic Analysis of YouTube Comments on Istanbul Street Food: The Case of Mark Wiens",
@@ -603,6 +603,7 @@
     }
   ],
   "sourceStatus": {
+    "timeline": "ok",
     "impact": "error: Could not read DergiPark impact metric: Articles View Count",
     "oai": "ok:22",
     "rss": "ok:16",
