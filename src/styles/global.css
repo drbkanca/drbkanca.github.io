@@ -448,3 +448,9 @@ html[lang="en"] .footer-info-links a{font-size:11px;letter-spacing:-.01em}
   .about-announcement-order #announcements{order:0}
   .about-announcement-order #about{order:1}
 }
+
+/* Mobile order: About the Journal, then Announcements, then latest articles. */
+@media(max-width:760px){
+  .about-announcement-order #about{order:0}
+  .about-announcement-order #announcements{order:1}
+}
